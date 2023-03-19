@@ -17,7 +17,8 @@ a2 = layer_2(a1) #output function
   #  tf.keras.layers.Dense(units = 3, activation = "sigmoid", name = "layer_1"), 
   #  tf.keras.layers.Dense(units = 1, activation = "sigmoid", name = "layer_2")
   #  ])
-print(a2)
+print(a2)#tensor array format
+print(a2.numpy())#numpy array format
 #model.predict(x)
 #model.summary()
 
