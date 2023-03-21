@@ -8,7 +8,7 @@ logging.getLogger("tensorflow").setLevel(logging.ERROR)
 tf.autograph.set_verbosity(0)
 logging.getLogger("tensorflow").setLevel(logging.ERROR)
 tf.autograph.set_verbosity(0)
-
+"""
 #data
 X = np.array([[69527371, 30.7075],[76140310, 22.2051],[7549, 51.33],[84854656, 146.6651],[1331, 109.78],[50141098,23.9036],[98944633, 26.429]]) 
 Y = np.array([[0.011694],[0.013753],[-0.027954],[0.007204], [0.008152],[-0.045479],[-0.005454]])
@@ -36,7 +36,8 @@ model = Sequential(
         Dense(25, activation='relu', name = 'layer1'),
         Dense(15, activation = 'relu', name = 'layer2'),
         Dense(5,activation= 'relu', name = 'layer3'),
-        Dense(1, activation='linear', name = 'layer4')
+        Dense(3,activation= 'relu', name = 'layer4'),
+        Dense(1, activation='linear', name = 'output')
      ]
 )
 model.summary()
@@ -50,18 +51,18 @@ W2, b2 = model.get_layer("layer2").get_weights()
 #compile model
 model.compile(
     loss = tf.keras.losses.BinaryCrossentropy(),
-    optimizer = tf.keras.optimizers.Adam(learning_rate=0.05),
+    optimizer = tf.keras.optimizers.Adam(learning_rate=0.02),
 )
 
 #Back Propogation
-model.fit(Xt,Yt,epochs=3)
+model.fit(Xt,Yt,epochs=10)
 
 #get updated weights and biases
 W1, b1 = model.get_layer("layer1").get_weights()
 W2, b2 = model.get_layer("layer2").get_weights()
 #print("W1:\n", W1, "\nb1:", b1)
 #print("W2:\n", W2, "\nb2:", b2)
-
+"""
 #Forward Propogation
 X_test = np.array([[87300242,97.0362]])  # postive example y = -0,010896])   # negative example
 X_testn = norm_l(X_test)
