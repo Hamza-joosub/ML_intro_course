@@ -24,9 +24,9 @@ print(f"post-norm-max/min-temp {np.max(Xn[:,0]):0.2f}, {np.min(Xn[:,0]):0.2f}")
 print(f"post-Norm-max/min-time: {np.max(Xn[:,1]):0.2f}, {np.min(Xn[:,1]):0.2f}")
 
 #copy data 
-Xt = np.tile(Xn,(5000,1))
-Yt= np.tile(Y,(5000,1))   
-print(Xt.shape, Yt.shape) 
+Xt = np.tile(Xn,(7000,1))
+Yt= np.tile(Y,(7000,1))   
+#print(Xt.shape, Yt.shape) 
 
 #create Model
 tf.random.set_seed(1234)  # applied to achieve consistent results
@@ -34,8 +34,9 @@ model = Sequential(
     [
         tf.keras.Input(shape=(2,)),
         Dense(25, activation='relu', name = 'layer1'),
-        Dense(15, activation='relu', name = 'layer2'),
-        Dense(1, activation='relu', name = 'layer3')
+        Dense(15, activation = 'relu', name = 'layer2'),
+        Dense(5,activation= 'relu', name = 'layer3'),
+        Dense(1, activation='linear', name = 'layer4')
      ]
 )
 model.summary()
@@ -43,8 +44,8 @@ model.summary()
 # get instantiated weights and biases
 W1,b1 = model.get_layer("layer1").get_weights()
 W2, b2 = model.get_layer("layer2").get_weights()
-print(f"W1{W1.shape}:\n", W1, f"\nb1{b1.shape}:", b1)
-print(f"W2{W2.shape}:\n", W2, f"\nb2{b2.shape}:", b2)
+#print(f"W1{W1.shape}:\n", W1, f"\nb1{b1.shape}:", b1)
+#print(f"W2{W2.shape}:\n", W2, f"\nb2{b2.shape}:", b2)
 
 #compile model
 model.compile(
@@ -53,13 +54,13 @@ model.compile(
 )
 
 #Back Propogation
-model.fit(Xt,Yt,epochs=100)
+model.fit(Xt,Yt,epochs=3)
 
 #get updated weights and biases
 W1, b1 = model.get_layer("layer1").get_weights()
 W2, b2 = model.get_layer("layer2").get_weights()
-print("W1:\n", W1, "\nb1:", b1)
-print("W2:\n", W2, "\nb2:", b2)
+#print("W1:\n", W1, "\nb1:", b1)
+#print("W2:\n", W2, "\nb2:", b2)
 
 #Forward Propogation
 X_test = np.array([[87300242,97.0362]])  # postive example y = -0,010896])   # negative example
