@@ -8,7 +8,7 @@ logging.getLogger("tensorflow").setLevel(logging.ERROR)
 tf.autograph.set_verbosity(0)
 logging.getLogger("tensorflow").setLevel(logging.ERROR)
 tf.autograph.set_verbosity(0)
-"""
+
 #data
 X = np.array([[69527371, 30.7075],[76140310, 22.2051],[7549, 51.33],[84854656, 146.6651],[1331, 109.78],[50141098,23.9036],[98944633, 26.429]]) 
 Y = np.array([[0.011694],[0.013753],[-0.027954],[0.007204], [0.008152],[-0.045479],[-0.005454]])
@@ -24,10 +24,12 @@ print(f"post-norm-max/min-temp {np.max(Xn[:,0]):0.2f}, {np.min(Xn[:,0]):0.2f}")
 print(f"post-Norm-max/min-time: {np.max(Xn[:,1]):0.2f}, {np.min(Xn[:,1]):0.2f}")
 
 #copy data 
-Xt = np.tile(Xn,(7000,1))
-Yt= np.tile(Y,(7000,1))   
+
+Xt = np.tile(Xn,(10000,1))
+Yt= np.tile(Y,(10000,1))   
 #print(Xt.shape, Yt.shape) 
 
+""""
 #create Model
 tf.random.set_seed(1234)  # applied to achieve consistent results
 model = Sequential(
@@ -50,19 +52,22 @@ W2, b2 = model.get_layer("layer2").get_weights()
 
 #compile model
 model.compile(
-    loss = tf.keras.losses.BinaryCrossentropy(),
-    optimizer = tf.keras.optimizers.Adam(learning_rate=0.02),
-)
+    loss = "mean_squared_error", 
+    optimizer =  tf.keras.optimizers.Adam(learning_rate=0.01),
+    metrics=['mean_squared_error']
+    )
+
 
 #Back Propogation
-model.fit(Xt,Yt,epochs=10)
+model.fit(Xt,Yt,epochs=30)
 
+"""
 #get updated weights and biases
 W1, b1 = model.get_layer("layer1").get_weights()
 W2, b2 = model.get_layer("layer2").get_weights()
 #print("W1:\n", W1, "\nb1:", b1)
 #print("W2:\n", W2, "\nb2:", b2)
-"""
+
 #Forward Propogation
 X_test = np.array([[87300242,97.0362]])  # postive example y = -0,010896])   # negative example
 X_testn = norm_l(X_test)
