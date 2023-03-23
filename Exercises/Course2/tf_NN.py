@@ -20,8 +20,8 @@ print(f"pre-Norm-max/min-time: {np.max(X[:,1]):0.2f}, {np.min(X[:,1]):0.2f}\n")
 norm_l = tf.keras.layers.Normalization()
 norm_l.adapt(X)  # learns mean, variance
 Xn = norm_l(X)
-print(f"post-norm-max/min-temp {np.max(Xn[:,0]):0.2f}, {np.min(Xn[:,0]):0.2f}")
-print(f"post-Norm-max/min-time: {np.max(Xn[:,1]):0.2f}, {np.min(Xn[:,1]):0.2f}")
+print(f"post-norm-max/min-Volume {np.max(Xn[:,0]):0.2f}, {np.min(Xn[:,0]):0.2f}")
+print(f"post-Norm-max/min-P/E: {np.max(Xn[:,1]):0.2f}, {np.min(Xn[:,1]):0.2f}")
 
 #copy data 
 
@@ -29,16 +29,14 @@ Xt = np.tile(Xn,(10000,1))
 Yt= np.tile(Y,(10000,1))   
 #print(Xt.shape, Yt.shape) 
 
-""""
+
 #create Model
 tf.random.set_seed(1234)  # applied to achieve consistent results
 model = Sequential(
     [
         tf.keras.Input(shape=(2,)),
-        Dense(25, activation='relu', name = 'layer1'),
-        Dense(15, activation = 'relu', name = 'layer2'),
-        Dense(5,activation= 'relu', name = 'layer3'),
-        Dense(3,activation= 'relu', name = 'layer4'),
+        Dense(4, activation='relu', name = 'layer1'),
+        Dense(4, activation = 'relu', name = 'layer2'),
         Dense(1, activation='linear', name = 'output')
      ]
 )
@@ -61,7 +59,6 @@ model.compile(
 #Back Propogation
 model.fit(Xt,Yt,epochs=30)
 
-"""
 #get updated weights and biases
 W1, b1 = model.get_layer("layer1").get_weights()
 W2, b2 = model.get_layer("layer2").get_weights()
